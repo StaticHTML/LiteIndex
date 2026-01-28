@@ -4,20 +4,17 @@
 
   const STORAGE_KEY = "liteindex:favorites";
 
-  const getBasePath = () => {
-    const path = window.location.pathname;
-    if (path.includes("/files/")) {
-      return path.split("/files/")[0] || "";
+  const SCRIPT_URL = (() => {
+    try {
+      return document.currentScript ? new URL(document.currentScript.src) : new URL(window.location.href);
+    } catch {
+      return new URL(window.location.href);
     }
-    if (path.endsWith("/")) {
-      return path.slice(0, -1);
-    }
-    return path.replace(/\/[^/]*$/, "");
-  };
+  })();
+  const BASE_URL = new URL(".", SCRIPT_URL);
 
-  const getIndexUrl = () => `${window.location.origin}${getBasePath()}/index.html`;
-
-  const getRootUrl = () => `${window.location.origin}${getBasePath()}/`;
+  const getIndexUrl = () => new URL("index.html", BASE_URL).toString();
+  const getRootUrl = () => BASE_URL.toString();
 
   const getPage = () => document.body.getAttribute("data-page") || "";
 
@@ -116,7 +113,7 @@
     if (document.querySelector(".favorites-pill")) return;
     const a = document.createElement("a");
     a.className = "favorites-pill";
-    a.href = getIndexUrl().replace(/index\.html$/i, "favorites.html");
+    a.href = new URL("favorites.html", BASE_URL).toString();
     const count = getFavorites().length;
     a.textContent = `\u2605 Favorites (${count})`;
     document.body.appendChild(a);
