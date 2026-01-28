@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>O45CALRK</title>
+  <link rel="stylesheet" href="../../../style.css" />
+</head>
+<body class="media-page">
+  <div class="frame">
+    <iframe width="640" height="360" frameborder="0" src="https://mega.nz/embed/O45CALRK#d-ZM7u7BmCBKGfbGQXjXcYEX7Kws_Ggyi1yp6NIu73I" allowfullscreen></iframe>
+  </div>
+  <nav class="nav">
+    <a class="nav-btn" href="../../../index.html">Home</a>
+    <a class="nav-btn" href="index.html">Album</a>
+    <a class="nav-btn" id="prev-link" href="#" aria-disabled="true">Previous</a>
+    <a class="nav-btn" id="next-link" href="#" aria-disabled="true">Next</a>
+  </nav>
+
+  <script>
+    (async () => {
+      try {
+        const indexUrl = new URL('index.html', window.location.href);
+        const res = await fetch(indexUrl);
+        if (!res.ok) return;
+        const html = await res.text();
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        const links = Array.from(doc.querySelectorAll('ul a'))
+          .map(a => a.getAttribute('href'))
+          .filter(href => href && href.endsWith('.html'));
+        const current = window.location.pathname.split('/').pop();
+        const idx = links.indexOf(current);
+        if (idx === -1) return;
+
+        const prev = links[idx - 1];
+        const next = links[idx + 1];
+        const prevEl = document.getElementById('prev-link');
+        const nextEl = document.getElementById('next-link');
+
+        if (prev) {
+          prevEl.href = prev;
+          prevEl.removeAttribute('aria-disabled');
+        } else {
+          prevEl.classList.add('disabled');
+        }
+
+        if (next) {
+          nextEl.href = next;
+          nextEl.removeAttribute('aria-disabled');
+        } else {
+          nextEl.classList.add('disabled');
+        }
+      } catch (err) {
+        // no-op
+      }
+    })();
+  </script>
+
+</body>
+</html>
