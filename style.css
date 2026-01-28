@@ -17,6 +17,47 @@ body {
   padding: 32px 20px 48px;
 }
 
+.hero { margin-bottom: 18px; text-align: center; }
+.logo {
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 18px rgba(90, 209, 255, 0.45), 0 0 32px rgba(255, 77, 240, 0.28);
+}
+.logo span,
+.tagline span {
+  display: inline-block;
+  transition: transform 0.18s ease;
+  transform-origin: center bottom;
+  position: relative;
+  z-index: 1;
+}
+.logo span {
+  color: #8fd3ff;
+}
+.logo span:hover { transform: scale(1.18); }
+.tagline span:hover { transform: scale(1.12); }
+.tagline {
+  margin-top: 2px;
+  font-size: 0.9rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero .total { margin-top: 16px; }
+
+@keyframes rainbowGlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pastelRainbow {
+  0% { color: #8fd3ff; }
+  100% { color: #8fd3ff; }
+}
+
 h1 {
   margin: 0 0 8px;
   font-size: clamp(1.8rem, 3vw, 2.4rem);
