@@ -4,13 +4,17 @@
 
   const STORAGE_KEY = "liteindex:favorites";
 
-  const getIndexUrl = () => {
+  const getBasePath = () => {
     const path = window.location.pathname;
-    const prefix = path.includes("/files/") ? path.split("/files/")[0] : "";
-    return `${window.location.origin}${prefix}/index.html`;
+    if (path.includes("/files/")) {
+      return path.split("/files/")[0] || "";
+    }
+    return path.replace(/\/[^/]*$/, "");
   };
 
-  const getRootUrl = () => getIndexUrl().replace(/index\.html$/i, "");
+  const getIndexUrl = () => `${window.location.origin}${getBasePath()}/index.html`;
+
+  const getRootUrl = () => `${window.location.origin}${getBasePath()}/`;
 
   const getPage = () => document.body.getAttribute("data-page") || "";
 
