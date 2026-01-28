@@ -9,6 +9,9 @@
     if (path.includes("/files/")) {
       return path.split("/files/")[0] || "";
     }
+    if (path.endsWith("/")) {
+      return path.slice(0, -1);
+    }
     return path.replace(/\/[^/]*$/, "");
   };
 
