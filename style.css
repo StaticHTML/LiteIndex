@@ -121,10 +121,10 @@ body {
 .logo span {
   color: #8fd3ff;
 }
-.logo span:nth-child(-n+4) {
+.logo span:nth-child(-n+6) {
   color: #8fd3ff;
 }
-.logo span:nth-child(n+5) {
+.logo span:nth-child(n+7) {
   color: #ff7bdc;
 }
 .logo span:hover { transform: scale(1.18); }
