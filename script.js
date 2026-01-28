@@ -18,23 +18,34 @@
 
   const getPage = () => document.body.getAttribute("data-page") || "";
 
+  const FALLBACK_META = {
+    "OnlyFans/angelpubby": { "name": "angelpubby", "image": "https://files.catbox.moe/jeipd3.jpg" },
+    "OnlyFans/Connor-Peters": { "name": "Connor Peters", "image": "https://files.catbox.moe/rrxegy.jpg" },
+    "OnlyFans/collegegymbro": { "name": "collegegymbro", "image": "https://files.catbox.moe/yiype5.png" },
+    "OnlyFans/Malik-Delgaty": { "name": "Malik Delgaty", "image": "https://files.catbox.moe/zbj5lw.jpg" },
+    "Patreon/Matt-Convard": { "name": "Matt Convard", "image": "https://files.catbox.moe/2ljznm.jpg" },
+    "Chaturbate/bigcocktwunk4u": { "name": "bigcocktwunk4u", "image": "" },
+    "Albums/Masked-Men": { "name": "Masked Men", "image": "" }
+  };
+
   const loadAlbumMeta = async () => {
     try {
       const url = new URL("albums.json", getRootUrl());
       const res = await fetch(url.toString(), { cache: "no-store" });
-      if (!res.ok) return {};
+      if (!res.ok) return null;
       const json = await res.json();
       return json && typeof json === "object" ? json : {};
     } catch {
-      return {};
+      return null;
     }
   };
 
   const buildData = (albumMeta) => {
+    const mergedMeta = { ...FALLBACK_META, ...(albumMeta || {}) };
     const data = {};
     Object.entries(DATA_ITEMS).forEach(([key, value]) => {
       const [platform, albumFolder] = key.split("/");
-      const meta = albumMeta[key] || {};
+      const meta = mergedMeta[key] || {};
       data[key] = {
         name: meta.name || albumFolder.replace(/-/g, " "),
         image: meta.image || "",
